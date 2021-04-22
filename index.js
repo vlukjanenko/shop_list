@@ -36,8 +36,8 @@ app.use('/api', productsRoutes)
 
 async function start() {
 	try {
-		await sequelize.sync({force: true});
-		//await sequelize.sync();
+		//await sequelize.sync({force: true});
+		await sequelize.sync();
 		app.listen(PORT);
 	} catch (e) {
 		console.log(e);
