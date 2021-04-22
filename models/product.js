@@ -4,6 +4,7 @@ const sequelize = require('../utils/database');
 const procuct = sequelize.define('products', {
 	id: {
 		primaryKey: true,
+		autoIncrement: true,
 		allowNull: false,
 		type: Sequelize.INTEGER,
 	},
