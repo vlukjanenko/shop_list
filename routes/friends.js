@@ -43,4 +43,41 @@ router.post('/friends', async(req, res) => {
 	}
 });
 
+
+/*
+**	удалить из друзей
+*/
+
+router.delete('/friends/:id', async (req, res) => {
+	try {
+		await Friend.destroy({
+			where: {
+				id_user: req.user.id,
+				id_friend: req.params.id
+			}
+		});
+		res.status(200).end();
+	} catch {
+		console.log(e);
+		res.status(500).json({message: 'Server error'});
+	}
+})
+
+/*
+**	получить список пользователей
+*/
+
+router.get('/users', async(req, res) => {
+	try {
+		const u = await User.findAll();
+		u.forEach(element => {
+			element.password = "";
+		});
+		res.status(200).json({users: u});
+	} catch (e) {
+		console.log(e);
+		res.status(500).json({message: 'Server error'});
+	}
+});
+
 module.exports = router;
