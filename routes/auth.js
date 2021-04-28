@@ -64,7 +64,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
 	try {
-		console.log("come to add user");
+		console.log("come to login user");
 		const users = await User.findAll({
 			where: {
 				email: req.body.email

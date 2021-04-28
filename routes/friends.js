@@ -23,6 +23,11 @@ router.get('/friends', async(req, res) => {
 	}
 });
 
+
+/*
+**	Добавить друга
+*/
+
 router.post('/friends', async(req, res) => {
 	try {
 		// TODO: проверка если ид друга равно ид пользователия. Или это на клиенте делать?
@@ -35,14 +40,13 @@ router.post('/friends', async(req, res) => {
 		console.log("Friends post")
 		res.status(201).json({user});
 	} catch (e) {
-		if (e.errors[0].validatorKey === "not_unique") {
+		if (e.errors[0].validatorKey === "not_unique") { // переделать, чтоб без исключений
 			return res.status(400).json({message: 'User already in friends list'});
 		}
 		console.log(e);
 		res.status(500).json({message: 'Server error'});
 	}
 });
-
 
 /*
 **	удалить из друзей
@@ -69,6 +73,7 @@ router.delete('/friends/:id', async (req, res) => {
 
 router.get('/users', async(req, res) => {
 	try {
+		console.log("Come to load all users");
 		const u = await User.findAll();
 		u.forEach(element => {
 			element.password = "";

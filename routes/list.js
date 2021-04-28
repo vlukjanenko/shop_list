@@ -21,7 +21,7 @@ router.get('/lists', async(req, res) => {
 			userLists.push(lst)
 		}
 		console.log("get lists");
-		res.status(200).json({userLists});
+		res.status(200).json(userLists);
 	} catch (e) {
 		console.log(e);
 		res.status(500).json({message: 'Server error'});
@@ -46,7 +46,7 @@ router.post('/lists', async (req, res) => {
 			id_list: list.id
 		})
 		console.log("add list");
-		res.status(201).json({list});
+		res.status(201).json(list);
 	} catch (e) {
 		console.log(e);
 		res.status(500).json({message: 'Server error'});
@@ -96,7 +96,7 @@ router.put('/lists/:id', async(req, res) => {
 			}
 		});
 		console.log("change list");
-		res.status(200).json({list: await List.findByPk(req.params.id)});
+		res.status(200).json(await List.findByPk(req.params.id));
 	} catch (e) {
 		console.log(e);
 		res.status(500).json({message: 'Server error'});

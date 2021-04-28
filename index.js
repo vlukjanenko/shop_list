@@ -9,9 +9,18 @@ const productsRoutes = require('./routes/product');
 const sequelize = require('./utils/database');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+//const cors = require('cors');
+/* const path = require('path');
 
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+	res.sendFile('/index.html');
+}) */
 
 app.use(express.json());
+
+//app.use(cors());
 
 app.use(
 	session({

@@ -21,7 +21,7 @@ router.get('/lists/:id', async(req, res) => {
 				id_list: req.params.id
 			}
 		})
-		res.status(200).json({items});
+		res.status(200).json(items);
 		console.log("get products list");
 
 	} catch (e) {
@@ -74,7 +74,7 @@ router.delete('/lists/:id_list/:id_product', async(req, res) => {
 		}
 		await Product.destroy({
 			where: {
-				id: req.id_product
+				id: req.params.id_product
 			}
 		})
 		console.log("del product from list");
@@ -122,7 +122,7 @@ router.put('/lists/:id_list/:id_product', async(req, res) => {
 
 		const listItem = await Product.findByPk(req.params.id_product);
 		console.log("Edit product in list");
-		res.status(200).json({product: listItem});
+		res.status(200).json(listItem);
 	} catch (e) {
 		console.log(e);
 		res.status(500).json({message: 'Server error'});
