@@ -13,7 +13,7 @@ const list = sequelize.define('lists', {
 		allowNull: false,
 	},
 	color: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.STRING,
 		allowNull: false,
 	},
 	dat: {
