@@ -9,18 +9,8 @@ const productsRoutes = require('./routes/product');
 const sequelize = require('./utils/database');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-//const cors = require('cors');
-/* const path = require('path');
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-	res.sendFile('/index.html');
-}) */
 
 app.use(express.json());
-
-//app.use(cors());
 
 app.use(
 	session({
@@ -33,19 +23,34 @@ app.use(
 	})
   );
 
-app.use('/api/auth', authRoutes);
+  app.use('/api/auth', authRoutes);
 
-app.use(verify);
+ /*
+ **	Проверка авторизации ключ и сессия
+ ** при запросах к апи
+ */
 
-app.use('/api', friendsRoutes);
+  app.use('/api', verify);
 
-app.use('/api', listRoutes);
+  app.use('/api', friendsRoutes);
 
-app.use('/api', productsRoutes)
+  app.use('/api', listRoutes);
+
+  app.use('/api', productsRoutes)
+
+ /*
+ **	На прочие запросы отправляем index.html ангуляр приложения
+ ** там уже своя провекра пользователя и перенаправление
+ */
+
+// app.use('/', (req, res) => {
+//	  res.sendFile('/home/host1216784/quickphoto33.ru/nodejs_app/www/public/index.html');
+//  });
+
 
 async function start() {
 	try {
-		//await sequelize.sync({force: true});
+		//await sequelize.sync({force: true}); //force - пересоздает таблицы
 		await sequelize.sync();
 		app.listen(PORT);
 	} catch (e) {
