@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const Friend = require('../models/friend');
 const User = require('../models/user');
+const { Op } = require('sequelize');
 const router = Router();
 
 router.get('/friends', async(req, res) => {
@@ -16,7 +17,7 @@ router.get('/friends', async(req, res) => {
 			user.password = "";
 			usersList.push(user);
 		}
-		res.status(200).json({friends: usersList});
+		res.status(200).json(usersList);
 	} catch (e) {
 		console.log(e);
 		res.status(500).json({message: 'Server error'});
@@ -38,7 +39,7 @@ router.post('/friends', async(req, res) => {
 			id_friend: user.id
 		})
 		console.log("Friends post")
-		res.status(201).json({user});
+		res.status(201).json(user);
 	} catch (e) {
 		if (e.errors[0].validatorKey === "not_unique") { // переделать, чтоб без исключений
 			return res.status(400).json({message: 'User already in friends list'});
@@ -68,17 +69,26 @@ router.delete('/friends/:id', async (req, res) => {
 })
 
 /*
-**	получить список пользователей
+**	поиск пользователя
 */
 
 router.get('/users', async(req, res) => {
 	try {
 		console.log("Come to load all users");
-		const u = await User.findAll();
+		const u = await User.findAll({
+			where: {
+				id: {
+					[Op.ne]: req.user.id
+				},
+				email: {
+					[Op.substring]: req.query.search
+				}
+			}
+		});
 		u.forEach(element => {
 			element.password = "";
 		});
-		res.status(200).json({users: u});
+		res.status(200).json(u);
 	} catch (e) {
 		console.log(e);
 		res.status(500).json({message: 'Server error'});

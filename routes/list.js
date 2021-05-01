@@ -194,7 +194,7 @@ router.get('/user-lists/:id/users', async(req, res) => {
 			usersList.push(usr);
 		}
 
-		res.status(200).json({users: usersList});
+		res.status(200).json(usersList);
 		console.log("get users of list");
 
 	} catch (e) {
